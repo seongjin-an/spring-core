@@ -30,4 +30,12 @@ public class ConfigurationSingletonTest {
         Assertions.assertThat(memberService.getMemberRepository()).isSameAs(memberRepository);
         Assertions.assertThat(orderService.getMemberRepository()).isSameAs(memberRepository);
     }
+
+    @DisplayName("@Configuration 과 바이트 코드 조작의 마법")
+    @Test
+    public void configurationDeep() throws Exception{
+        ApplicationContext ac = new AnnotationConfigApplicationContext(AppConfig.class);
+        AppConfig bean = ac.getBean(AppConfig.class);
+        System.out.println("bean = " + bean.getClass());
+    }
 }
