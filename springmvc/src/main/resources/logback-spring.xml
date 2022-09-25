@@ -1,6 +1,40 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <configuration>
     <!--
+    https://oingdaddy.tistory.com/257
+      -->
+    <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter" />
+    <conversionRule conversionWord="wex" converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter" />
+    <conversionRule conversionWord="wEx" converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter" />
+    <property name="CONSOLE_LOG_PATTERN" value="${CONSOLE_LOG_PATTERN:-%clr(%d{${LOG_DATEFORMAT_PATTERN:-yyyy-MM-dd HH:mm:ss.SSS}}){blue} %clr(${LOG_LEVEL_PATTERN:-%5level}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>
+    <property name="FILE_LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss:SSS} -%5level ${PID:-} --- [%t] %logger : %m%n"/>
+    <property name="FILE_LOG_PATTERN2" value="%d{HH:mm:ss.SSS} %highlight([%-5level]) [%thread] %cyan([%logger{36}]) - %m%n"/>
+    <property name="SIMPLE_CONSOLE" value="%clr(%d{yyyyMMdd HH:mm:ss.SSS}){magenta} %clr(%-5level){} %clr([%thread]){blue} %clr([%logger{0}:%line]){cyan} : %msg %n" />
+    <!--    <property name="CONSOLE_LOG_CHARSET" value="${CONSOLE_LOG_CHARSET:-}"/>-->
+<!--
+https://romeoh.tistory.com/101
+%d  => 로그 기록시간
+%thread => 현재 Thread 이름
+%-5level => 로그 레벨, -5는 출력의 고정폭 (5글자)
+%logger{35} => 축약된 logger name, 35는 최대 자릿수
+%msg => 로그메시지
+%n => 줄바꿈
+기타
+${PID:-} => 프로세스 아이디
+%p => 로깅 레벨
+%F => 로깅이 발생한 프로그램 파일명
+%M => 로깅일 발생한 메소드의 이름
+%l => 로깅이 발생한 호출지의 정보
+%L => 로깅이 발생한 호출지의 라인 수
+%t => 쓰레드 명
+%c => 로깅이 발생한 카테고리
+%C => 로깅이 발생한 클래스 명
+%m => 로그 메시지
+%r => 애플리케이션 시작 이후부터 로깅이 발생한 시점까지의 시간
+  -->
+
+
+    <!--
       https://docs.spring.io/spring-boot/docs/current/reference/html/features.html#features.logging
       -->
     <!--
@@ -47,10 +81,13 @@
     <!--콘솔에 로그를 남깁니다.-->
     <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            <Pattern>
-                %d{yyyy-MM-dd HH:mm:ss} [%thread] [%-5level] %logger{36} - %msg%n
-            </Pattern>
+<!--            <Pattern>-->
+<!--                %d{yyyy-MM-dd HH:mm:ss} [%thread] [%-5level] %logger{36} - %msg%n-->
+<!--            </Pattern>-->
             <charset>UTF-8</charset>
+<!--            <pattern>${CONSOLE_LOG_PATTERN}</pattern>-->
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+<!--            <charset>${CONSOLE_LOG_CHARSET}</charset>-->
         </encoder>
     </appender>
 
@@ -58,10 +95,13 @@
     <appender name="File" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOG_DIR}/bamdule.log</file>
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            <Pattern>
-                %d{yyyy-MM-dd HH:mm:ss} [%-5level] %logger{36} - %msg%n
-            </Pattern>
+<!--            <Pattern>-->
+<!--                %d{yyyy-MM-dd HH:mm:ss} [%-5level] %logger{36} - %msg%n-->
+<!--            </Pattern>-->
             <charset>UTF-8</charset>
+<!--            <pattern>${CONSOLE_LOG_PATTERN}</pattern>-->
+            <pattern>${FILE_LOG_PATTERN}</pattern>
+<!--            <charset>${CONSOLE_LOG_CHARSET}</charset>-->
         </encoder>
 
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
@@ -74,8 +114,11 @@
     <appender name="RollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOG_DIR}/archived/bamdule_roling.log</file>
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            <Pattern>%d{yyyy-MM-dd HH:mm:ss} [%-5level] %logger{36} - %msg%n</Pattern>
+<!--            <Pattern>%d{yyyy-MM-dd HH:mm:ss} [%-5level] %logger{36} - %msg%n</Pattern>-->
             <charset>UTF-8</charset>
+<!--            <pattern>${CONSOLE_LOG_PATTERN}</pattern>-->
+            <pattern>${FILE_LOG_PATTERN}</pattern>
+<!--            <charset>${CONSOLE_LOG_CHARSET}</charset>-->
         </encoder>
 
         <!-- 10MB가 넘어가면 새로운 압축파일이 생성 -->
@@ -105,10 +148,13 @@
         </filter>
         <file>${LOG_DIR}/bamdule-error.log</file>
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            <Pattern>
-                %d{yyyy-MM-dd HH:mm:ss} [%-5level] %logger{36} - %msg%n
-            </Pattern>
+<!--            <Pattern>-->
+<!--                %d{yyyy-MM-dd HH:mm:ss} [%-5level] %logger{36} - %msg%n-->
+<!--            </Pattern>-->
             <charset>UTF-8</charset>
+<!--            <pattern>${CONSOLE_LOG_PATTERN}</pattern>-->
+            <pattern>${FILE_LOG_PATTERN}</pattern>
+<!--            <charset>${CONSOLE_LOG_CHARSET}</charset>-->
         </encoder>
 
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
