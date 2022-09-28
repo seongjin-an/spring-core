@@ -64,10 +64,17 @@ public class BasicItemController {
         return "basic/item";
     }
 
-    @PostMapping("/add")
+//    @PostMapping("/add")
     public String addItemV4(Item item){
         itemRepository.save(item);
         return "basic/item";
+    }
+
+    @PostMapping("/add")
+    public String addItemV5(Item item){
+        Item savedItem = itemRepository.save(item);
+//        return "basic/item";
+        return "redirect:/basic/items/"+savedItem.getId();
     }
 
     @GetMapping("/{itemId}/edit")
