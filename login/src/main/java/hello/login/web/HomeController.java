@@ -47,7 +47,7 @@ public class HomeController {
     public String homeLoginV2(HttpServletRequest request, Model model) {
         //세션 괁리자에게 저장된 회원 정보 조회
         Member member = (Member) sessionManager.getSession(request);
-        
+
         if (member == null) {
             return "home";
         }
