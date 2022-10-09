@@ -1,3 +1,4 @@
 core    core
 mvc1    servlet springmvc   item-service
-mvc2    thymeleaf-basic form    message validation  login
+mvc2    thymeleaf-basic form    message validation  login   exception   typeconverter   upload
+db  jdbc
