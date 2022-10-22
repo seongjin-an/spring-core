@@ -2,6 +2,55 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="hello.itemservice.repository.mybatis.ItemMapper">
+<!--
+    <sql id="userColumns"> ${alias}.id,${alias}.username,${alias}.password </sql>
+
+    <select id="selectUsers" resultType="map">
+        select
+            <include refid="userColumns"><property name="alias" value="t1"/></include>
+            <include refid="userColumns"><property name="alias" value="t2"/></include>
+        from some_table t1
+            cross join some_table t2
+    </select>
+
+    <sql id="sometable">
+        ${prefix}Table
+    </sql>
+
+    <sql id="someinclude">
+        from
+            <include refid="${include_target}"/>
+    </sql>
+
+    <select id="select" resultType="map">
+        select
+            field1, field2, field3
+        <include refid="someinclude">
+            <property name="prefix" value="Some"/>
+            <property name="include_target" value="sometable"/>
+        </include>
+    </select>
+
+    <select id="selectUsers" resultType="User">
+        select
+            user_id as "id",
+            user_name as "userName",
+            hashed_password as "hashedPassword"
+        from some_table
+        where id = #{id}
+    </select>
+
+    <resultMap id="userResultMap" type="User">
+        <id property="id" column="user_id" />
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+    </resultMap>
+    <select id="selectUsers" resultMap="userResultMap">
+        select user_id, user_name, hashed_password
+        from some_table
+        where id = #{id}
+    </select>
+-->
 
     <insert id="save" useGeneratedKeys="true" keyProperty="id">
         insert into item (item_name, price, quantity)
