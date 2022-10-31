@@ -1,6 +1,7 @@
 package hello.springtx.propagation;
 
 import lombok.extern.slf4j.Slf4j;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.UnexpectedRollbackException;
 import org.springframework.transaction.interceptor.DefaultTransactionAttribute;
 
 import javax.sql.DataSource;
@@ -115,6 +117,21 @@ public class BasicTxTest {
 
         log.info("외부 트랜잭션 롤백");
         txManager.rollback(outer);
+    }
+
+    @DisplayName("내부 트랜잭션 롤백")
+    @Test
+    public void inner_rollback() throws Exception{
+        log.info("외부 트랜잭션 시작");
+        TransactionStatus outer = txManager.getTransaction(new DefaultTransactionAttribute());
+
+        log.info("내부 트랜잭션 시작");
+        TransactionStatus inner = txManager.getTransaction(new DefaultTransactionAttribute());
+        log.info("내부 트랜잭션 롤백");
+        txManager.rollback(inner);
+
+        log.info("외부 트랜잭션 커밋");
+        Assertions.assertThatThrownBy(() -> txManager.commit(outer)).isInstanceOf(UnexpectedRollbackException.class);
     }
 
 }
