@@ -101,7 +101,7 @@ public class BasicTxTest {
         log.info("외부 트랜잭션 커밋");
         txManager.commit(outer);
     }
-    
+
     @DisplayName("외부 트랜잭션 롤백")
     @Test
     public void outer_rollback() throws Exception{
