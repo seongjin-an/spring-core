@@ -22,7 +22,6 @@ class MemberServiceTest {
      * memberRepository @Transactional:ON
      * logRepository    @Transactional:ON
      */
-    @DisplayName("각각의 트랜잭션")
     @Test
     public void outerTxOff_success() throws Exception{
         // given
@@ -32,10 +31,28 @@ class MemberServiceTest {
         memberService.joinV1(username);
 
         // when: 모든 데이터가 정상 저장된다.
-        assertFalse(memberRepository.find(username).isEmpty());
+        assertTrue(memberRepository.find(username).isPresent());
         assertTrue(logRepository.find(username).isPresent());
-        assertThat(memberRepository.find(username).isPresent()).isTrue();
-        assertThat(logRepository.find(username).isPresent()).isTrue();
+//        assertThat(memberRepository.find(username).isPresent()).isTrue();
+//        assertThat(logRepository.find(username).isPresent()).isTrue();
+    }
+
+    /**
+     * memberService    @Transactional:OFF
+     * memberRepository @Transactional:ON
+     * logRepository    @Transactional:ON Exception
+     */
+    @Test
+    public void outerTxOff_fail() throws Exception{
+        // given
+        String username = "로그예외_outerTxOff_fail";
+
+        // when
+        assertThatThrownBy(() -> memberService.joinV1(username)).isInstanceOf(RuntimeException.class);
+
+        // when: 모든 데이터가 정상 저장된다.
+        assertTrue(memberRepository.find(username).isPresent());
+        assertTrue(logRepository.find(username).isEmpty());
     }
 
 }
